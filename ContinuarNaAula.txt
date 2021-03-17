@@ -1,5 +1,5 @@
 Curso React: Function Components, uma abordagem moderna
 
 Continuar na aula:
-    01. Iniciando com Functions Components
-        04. Facilitando a prototipação
+    03. Forms e Jooks
+        05. Assincronicidade e validação

@@ -1,22 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Button, TextField, Switch, FormControlLabel } from '@material-ui/core'
 
 function FormularioCadastro(){
+    // Cria variavel para guardar estado,
+    // E cria função setNome para atribuir novo valor ao estado
+    const [nome, setNome] = useState("");
+    const [sobrenome, setSobrenome] = useState("");
+    const [cpf, setCpf] = useState(0);
     return(
-        <form>
-            <label>Nome</label>
-            <input type="text"/>
+        <form 
+            onSubmit={ (event)=>{
+                event.preventDefault();
+                console.log(nome);
+                }
+            }
+        >
+            <TextField 
+                onChange={(event) => {
+                    setNome(event.target.value);
+                }}
+                id="nome" 
+                label="Nome" 
+                variant="outlined" 
+                fullWidth 
+                margin="normal"
+            />
+            <TextField id="sobrenome" label="Sobrenome" variant="outlined" fullWidth margin="normal"/>
+            <TextField id="cpf" label="CPF" variant="outlined" fullWidth margin="normal"/>
 
-            <label>Sobrenome</label>
-            <input type="text"/>
+            <FormControlLabel 
+                label="Promoções" 
+                control={<Switch name="promocoes" defaultChecked color="primary"/>}
+            />
+            <FormControlLabel 
+                label="Novidades" 
+                control={<Switch name="novidades" defaultChecked color="primary"/>}
+            />
 
-            <label>CPF</label>
-            <input type="text"/>
-
-            <label>Promoções</label>
-            <input type="checkbox"/>
-
-            <label>Novidades</label>
-            <input type="checkbox"/>
+            <Button type="submit" variant="contained" color="primary">Cadastrar</Button>
         </form>
     );
 }
