@@ -1,5 +1,5 @@
-Curso React: Function Components, uma abordagem moderna
+Curso React: Hooks, Contextos e boas práticas
 
 Continuar na aula:
-    03. Forms e Jooks
-        05. Assincronicidade e validação
+    01. Entendendo o problema
+        03. Entendendo o problema do cliente
