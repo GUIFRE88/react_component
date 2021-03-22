@@ -1,5 +1,5 @@
 Curso React: Hooks, Contextos e boas práticas
 
 Continuar na aula:
-    01. Entendendo o problema
-        03. Entendendo o problema do cliente
+    03. Controlando Ciclo de vida
+        03. useEffect
