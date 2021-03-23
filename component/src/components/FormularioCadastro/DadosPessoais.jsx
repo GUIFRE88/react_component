@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Button, TextField, Switch, FormControlLabel } from '@material-ui/core'
+import {Button, TextField, Switch, FormControlLabel, TextareaAutosize } from '@material-ui/core'
 
 // A função vem do fonte App, fazendo {anEnviar} é feita a descontrução dela
 // podendo ser chamada diretamente
-function DadosPessoais({aoEnviar, validarCPF}){
+function DadosPessoais({aoEnviar, validacoes}){
     // Cria variavel para guardar estado,
     // E cria função setNome para atribuir novo valor ao estado
     const [nome, setNome] = useState("");
@@ -11,13 +11,34 @@ function DadosPessoais({aoEnviar, validarCPF}){
     const [cpf, setCpf] = useState("");
     const [promossoes, setPromossoes] = useState(true);
     const [novidades, setNovidades] = useState(true);
-    const [erros, setErros] = useState({cpf:{erro:false, texto:""}}); // Cria estado para erros do form
+    const [erros, setErros] = useState({cpf:{erro:TextareaAutosize, texto:""}}); // Cria estado para erros do form
     // Os estados  devem ser criados sempres no inici da function, sem condicionais
+    
+    function validarCampos(event){
+        const {name, value} = event.target;
+        const novoEstado = {...erros};
+        novoEstado[name] = validacoes[name](value);
+        setErros(novoEstado);
+    }
+
+    function possoEnviar(){
+        let possoEnviar = true;
+        for(let campo in erros){
+            if(!erros[campo].valido){
+                return false
+            }
+        }
+        return true;
+    }
+    
     return(
         <form 
             onSubmit={ (event)=>{
                 event.preventDefault();
-                aoEnviar({nome, sobrenome, cpf, novidades, promossoes})
+                if(possoEnviar){
+                    aoEnviar({nome, sobrenome, cpf, novidades, promossoes})
+                    }
+               
                 }
             }
         >
@@ -27,6 +48,7 @@ function DadosPessoais({aoEnviar, validarCPF}){
                 }}
                 id="nome" 
                 label="Nome" 
+                name="nome"
                 variant="outlined" 
                 fullWidth 
                 margin="normal"
@@ -36,6 +58,7 @@ function DadosPessoais({aoEnviar, validarCPF}){
                     setSobrenome(event.target.value);
                 }}
                 id="sobrenome" 
+                name="sobrenome"
                 label="Sobrenome" 
                 variant="outlined" 
                 fullWidth 
@@ -45,14 +68,12 @@ function DadosPessoais({aoEnviar, validarCPF}){
                 onChange={(event) => {
                     setCpf(event.target.value);
                 }}
-                onBlur={(event)=>{
-                    const ehValid = validarCPF(cpf)
-                    setErros({cpf:ehValid})
-                }}
+                onBlur={validarCampos}
                 error={erros.cpf.erro}
                 helperText={erros.cpf.texto}
                 id="cpf" 
                 label="CPF" 
+                name="cpf"
                 variant="outlined" 
                 fullWidth 
                 margin="normal"
@@ -81,7 +102,7 @@ function DadosPessoais({aoEnviar, validarCPF}){
                 />}
             />
 
-            <Button type="submit" variant="contained" color="primary">Cadastrar</Button>
+            <Button type="submit" variant="contained" color="primary">Próximo</Button>
         </form>
     );
 }
